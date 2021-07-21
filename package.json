@@ -1,0 +1,86 @@
+{
+  "name": "@skhemata/skhemata-base",
+  "version": "1.1.1-0",
+  "description": "Skhemata Base Web Component. This web component is base component which provides common functionality for other components.",
+  "author": "skhemata-base",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "license": "https://raw.githubusercontent.com/skhemata/skhemata-base/master/LICENSE",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/skhemata/skhemata-base.git"
+  },
+  "keywords": [
+    "skhemata",
+    "base",
+    "web component"
+  ],
+  "scripts": {
+    "start": "tsc && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"wds\"",
+    "test": "tsc",
+    "build": "tsc",
+    "prepare": "npm run build",
+    "lint": "eslint --ext .ts,.html . --ignore-path .gitignore && prettier \"**/*.ts\" --check --ignore-path .gitignore",
+    "format": "eslint --ext .ts,.html . --fix --ignore-path .gitignore && prettier \"**/*.ts\" --write --ignore-path .gitignore"
+  },
+  "dependencies": {
+    "@open-wc/scoped-elements": "^2.0.0-next.3",
+    "@skhemata/skhemata-api-client-js": "^1.1.0",
+    "@skhemata/skhemata-css": "^1.1.0",
+    "lit": "^2.0.0-rc.2"
+  },
+  "devDependencies": {
+    "@open-wc/eslint-config": "^4.3.0",
+    "@typescript-eslint/eslint-plugin": "^4.23.0",
+    "@typescript-eslint/parser": "^4.23.0",
+    "@web/dev-server": "^0.1.17",
+    "concurrently": "^5.3.0",
+    "eslint": "^7.28.0",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-html": "^6.1.2",
+    "husky": "^4.3.8",
+    "lint-staged": "^10.5.4",
+    "prettier": "^2.3.1",
+    "tslib": "^2.2.0",
+    "typescript": "^4.2.4"
+  },
+  "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
+    "extends": [
+      "@open-wc/eslint-config",
+      "eslint-config-prettier"
+    ],
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "rules": {
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": [
+        "error"
+      ],
+      "import/no-unresolved": "off",
+      "import/extensions": [
+        "error",
+        "always",
+        {
+          "ignorePackages": true
+        }
+      ]
+    }
+  },
+  "prettier": {
+    "singleQuote": true,
+    "arrowParens": "avoid"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  }
+}
