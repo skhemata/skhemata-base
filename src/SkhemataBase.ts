@@ -90,28 +90,51 @@ export class SkhemataBase extends ScopedElementsMixin(LitElement) {
   }
 
   async firstUpdated() {
-    // init API
     if (this.api?.url) {
-      this.skhemata = new Skhemata(this.api.url);
-      this.skhemata.init();
+      this.initSkhemataAPI();
     }
 
     if (this.configSrc) {
-      this.configData = await fetch(this.configSrc).then(res => res.json());
+      // await in case subclass firstUpdated() depends on config data
+      await this.initConfigData();
     }
 
-    // Load translations
     if (this.translationDir || this.translationData) {
-      if (this.translationDir) {
-        fetch(`${this.translationDir}${this.translationLang}.json`).then(
-          res => {
-            this.translationSelected = res.json();
-          }
-        );
-      } else {
-        this.translationSelected = this.translationData[this.translationLang];
-      }
+      this.initTranslations();
     }
+
+    this.initEventListeners();
+
     this.requestUpdate();
+  }
+
+  initSkhemataAPI(){
+    this.skhemata = new Skhemata(this.api.url);
+    this.skhemata.init();
+  }
+
+  async initConfigData(){
+    this.configData = await fetch(this.configSrc).then(res => res.json());
+  }
+
+  initTranslations(){
+    if (this.translationDir) {
+      fetch(`${this.translationDir}${this.translationLang}.json`).then(
+        res => {
+          this.translationSelected = res.json();
+        }
+      );
+    } else {
+      this.translationSelected = this.translationData[this.translationLang];
+    }
+  }
+
+  initEventListeners(){
+    window.addEventListener('skhemata-login', () => {
+      this.requestUpdate();
+    });
+    window.addEventListener('skhemata-logout', () => {
+      this.requestUpdate();
+    });
   }
 }
