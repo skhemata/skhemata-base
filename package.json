@@ -1,6 +1,6 @@
 {
   "name": "@skhemata/skhemata-base",
-  "version": "1.2.0",
+  "version": "1.2.1-rc.0",
   "description": "Skhemata Base Web Component. This web component is base component which provides common functionality for other components.",
   "author": "skhemata-base",
   "main": "dist/index.js",
