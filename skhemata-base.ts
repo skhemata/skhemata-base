@@ -1,3 +1,5 @@
 import { SkhemataBase } from './src/SkhemataBase.js';
 
-window.customElements.define('skhemata-base', SkhemataBase);
+if(!customElements.get('skhemata-base')) {
+    window.customElements.define('skhemata-base', SkhemataBase);
+}
